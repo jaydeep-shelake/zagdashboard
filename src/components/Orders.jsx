@@ -5,6 +5,7 @@ import OrderItem from "./OrderItem"
 import { useState } from "react"
 const Orders = () => {
     const [activeTab,setActiveTab] =useState()
+    const [lowest,setLowest] = useState(false)
      const orders  =[
         {
             title:'McDonalds',
@@ -69,6 +70,16 @@ const Orders = () => {
         setUpdatedOrders(newOrders)
     }
 
+    const sortAmount =()=>{
+      if(lowest){
+        updatedOrders.sort((a,b)=>a.amount - b.amount)
+      }
+      else{
+        updatedOrders.sort((a,b)=>b.amount - a.amount)
+      }
+      setLowest(!lowest)
+    }
+
   return (
     <div className="w-full  bg-[#FFFFFF] rounded-[20px] p-[28px] mt-[30px]">
       <div className="w-full flex items-center justify-between pb-[12px] border-b border-b-[#F4F5F7]">
@@ -101,7 +112,7 @@ const Orders = () => {
                
             </div>
           </div>
-          <div className="w-[125px] py-[7px] bg-[#EFF0F6] flex items-center justify-between px-[11px] rounded-[7px]">
+          <div className="w-[125px] py-[7px] bg-[#EFF0F6] flex items-center justify-between px-[11px] rounded-[7px] cursor-pointer" onClick={sortAmount}>
             <p className="text-[#4F5E74] font-semibold text-[10px] leading-[12px] tracking-[0.02px] ">Amount</p>
             <img src={arrow} alt="arrow" className="h-[12px] w-[12px] " />
           </div>
