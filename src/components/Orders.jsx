@@ -6,6 +6,7 @@ import { useState } from "react"
 const Orders = () => {
     const [activeTab,setActiveTab] =useState()
     const [lowest,setLowest] = useState(false)
+    const [dateLowest,setDateLowest] =useState(false)
      const orders  =[
         {
             title:'McDonalds',
@@ -80,6 +81,24 @@ const Orders = () => {
       setLowest(!lowest)
     }
 
+    const sortDate =()=>{
+    if(dateLowest){
+      updatedOrders.sort((a,b)=>{
+        const dateA = new Date(a.palced)
+        const dateB  = new Date(b.palced)
+        return dateA - dateB
+      })
+    }
+    else{
+       updatedOrders.sort((a,b)=>{
+        const dateA = new Date(a.palced)
+        const dateB  = new Date(b.palced)
+        return dateB - dateA
+      })
+    }
+    setDateLowest(!dateLowest)
+    }
+
   return (
     <div className="w-full  bg-[#FFFFFF] rounded-[20px] p-[28px] mt-[30px]">
       <div className="w-full flex items-center justify-between pb-[12px] border-b border-b-[#F4F5F7]">
@@ -116,7 +135,7 @@ const Orders = () => {
             <p className="text-[#4F5E74] font-semibold text-[10px] leading-[12px] tracking-[0.02px] ">Amount</p>
             <img src={arrow} alt="arrow" className="h-[12px] w-[12px] " />
           </div>
-          <div className="w-[125px] py-[7px] bg-[#EFF0F6] flex items-center justify-between rounded-[7px] px-[11px]">
+          <div className="w-[125px] py-[7px] bg-[#EFF0F6] flex items-center justify-between rounded-[7px] px-[11px]" onClick={sortDate}>
             <p className="text-[#4F5E74] font-semibold text-[10px] leading-[12px] tracking-[0.02px] ">Placed on</p>
             <img src={arrow} alt="arrow" className="h-[12px] w-[12px] " />
           </div>
