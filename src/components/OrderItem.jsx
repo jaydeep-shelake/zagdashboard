@@ -1,7 +1,11 @@
 import dots from "../assets/ellipsis-h.png"
-const OrderItem = ({order}) => {
+const OrderItem = ({order,handleOpenEditModal}) => {
+
+  const handleClick=()=>{
+    handleOpenEditModal(order)
+  }
   return (
-    <div className="w-full flex items-center justify-center my-[13px]">
+    <div className="w-full flex items-center justify-center my-[13px] cursor-pointer" onClick={handleClick}>
       <div className="w-[30%]">
         <div className="flex items-center justify-start">
            <div className="w-[20px] h-[20px] rounded-full border border-[#0000004D]">

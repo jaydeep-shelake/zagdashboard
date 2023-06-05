@@ -3,10 +3,13 @@ import arrow from "../assets/Chevron-Right.png"
 import carot from "../assets/uparrow.png"
 import OrderItem from "./OrderItem"
 import { useState } from "react"
+import EditModal from "./EditModal"
 const Orders = () => {
     const [activeTab,setActiveTab] =useState()
     const [lowest,setLowest] = useState(false)
     const [dateLowest,setDateLowest] =useState(false)
+    const [showEditModal,setShowEditModal]=useState(false)
+    const [currentOrder,setCurrentOrder]=useState({})
      const orders  =[
         {
             title:'McDonalds',
@@ -99,6 +102,22 @@ const Orders = () => {
     setDateLowest(!dateLowest)
     }
 
+    const handleOpenEditModal =(order)=>{
+      setShowEditModal(true)
+      setCurrentOrder(order)
+    }
+
+    const getSubmittedOrders  =(newOrder)=>{
+     const newUpdatedOrder = orders.map((order)=>{
+      if(order.title === newOrder.title){
+       return {...order,...newOrder} 
+      }
+      return order
+     })
+     setUpdatedOrders(newUpdatedOrder)
+     setShowEditModal(false)
+    }
+
   return (
     <div className="w-full  bg-[#FFFFFF] rounded-[20px] p-[28px] mt-[30px]">
       <div className="w-full flex items-center justify-between pb-[12px] border-b border-b-[#F4F5F7]">
@@ -151,10 +170,11 @@ const Orders = () => {
       <div className="w-full mt-[13px]">
         {
             updatedOrders.map((order,i)=>(
-                <OrderItem key={i} order={order}/>
+                <OrderItem key={i} order={order} handleOpenEditModal={handleOpenEditModal}/>
             ))
         }
       </div>
+      {showEditModal&&<EditModal order={currentOrder} getSubmittedOrders={getSubmittedOrders}/>}
     </div>
   )
 }
